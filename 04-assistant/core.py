@@ -85,34 +85,34 @@ def delete_contact(name: str, value: str) -> str:
         return "email"
     raise ValueError(E_UNKNOWN_FORMAT)
 
-def show_phone(name: str) -> set:
+def show_phone(name: str) -> list:
     """Return all phones for the specified person.
 
     Args:
         name (str): Person's name.
 
     Returns:
-        set: Unique list of person's phones.
+        list: Sorted list of unique person's phones.
 
     Raises:
         ValueError: If person doesn't exist.
     """
     if name not in persons:
         raise ValueError("Specified person doesn't exist.")
-    return persons[name]["phones"]
+    return sorted(persons[name]["phones"])
 
-def show_email(name: str) -> set:
+def show_email(name: str) -> list:
     """Return all emails for the specified person.
 
     Args:
         name (str): Person's name.
 
     Returns:
-        set: Unique list of person's emails.
+        list: Sorted list of unique person's emails.
 
     Raises:
         ValueError: If person doesn't exist.
     """
     if name not in persons:
         raise ValueError("Specified person doesn't exist.")
-    return persons[name]["emails"]
+    return sorted(persons[name]["emails"])

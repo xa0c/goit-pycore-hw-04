@@ -138,7 +138,7 @@ def main():
                     result = core.show_phone(**args)
                     if result:
                         print(f"List of phone numbers for {args["name"]}:")
-                        for phone in sorted(result):
+                        for phone in result:
                             print(phone)
                     else:
                         print(f"{args["name"]} doesn't have any phone numbers.")
@@ -146,7 +146,7 @@ def main():
                     result = core.show_email(**args)
                     if result:
                         print(f"List of email addresses for {args["name"]}:")
-                        for email in sorted(result):
+                        for email in result:
                             print(email)
                     else:
                         print(f"{args["name"]} doesn't have any email addresses.")
