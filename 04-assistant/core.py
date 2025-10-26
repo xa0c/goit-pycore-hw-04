@@ -116,3 +116,44 @@ def show_email(name: str) -> list:
     if name not in persons:
         raise ValueError("Specified person doesn't exist.")
     return sorted(persons[name]["emails"])
+
+def render_person_table(name: str = None) -> str:
+    """Render person's contacts as a 2-col table of phones and emails.
+
+    Renders single person if name is provided. Otherwise renders all.
+
+    Args:
+        name (str): Person's name.
+
+    Returns:
+        str: Rendered person's table of contacts.
+
+    Raises:
+        ValueError: If person doesn't exist.
+    """
+    render_dict = persons
+    if name:
+        if name not in persons:
+            raise ValueError("Specified person doesn't exist.")
+        render_dict = {name: persons[name]}
+
+    output = ""
+    for name, contacts in render_dict.items():
+        output += "/" + '═' * 80 + "\\\n"
+        output += "│ " + f"Person: {name}".ljust(79) + "│\n"
+        output += "├" + "─" * 80 + "┤\n"
+        output += "│ " + "Phones".center(30) + "│ " + "Emails".center(47) + "│\n"
+        output += "│" + "-" * 80 + "│\n"
+        # Sort sets
+        phones = sorted(contacts["phones"])
+        emails = sorted(contacts["emails"])
+        # Equalize lists for equal zip loop
+        length_diff = len(phones) - len(emails)
+        if length_diff > 0:
+            emails.extend([""] * length_diff)
+        elif length_diff < 0:
+            phones.extend([""] * abs(length_diff))
+        for phone, email in zip(phones, emails):
+            output += "│ " + str(phone).ljust(30) + "│ " + email.ljust(47) + "│\n"
+        output += "└" + "─" * 80 + "┘\n"
+    return output

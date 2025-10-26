@@ -64,40 +64,6 @@ def parse_input(user_input: str) -> tuple[str, dict[str, str]]:
 
     return cmd.lower(), args
 
-def print_person(name: str = None):
-    """Print person's contacts as a 2-column table of phones and emails.
-
-    Prints single person if name is provided. Otherwise prints all.
-
-    Args:
-        name (str): Person's name.
-
-    Raises:
-        ValueError: If person doesn't exist.
-    """
-    persons = core.persons
-    if name:
-        if name not in core.persons:
-            raise ValueError("Specified person doesn't exist.")
-        persons = {name: core.persons[name]}
-
-    for name, contacts in persons.items():
-        print('/' + '═' * 80 + '\\')
-        print('│ ' + f"Person: {name}".ljust(79) + '│')
-        print('├' + '─' * 80 + '┤')
-        print('│ ' + "Phones".center(30) + '│ ' + "Emails".center(47) + '│')
-        print('│' + '-' * 80 + '│')
-        phones = sorted(contacts["phones"])
-        emails = sorted(contacts["emails"])
-        length_diff = len(phones) - len(emails)
-        if length_diff > 0:
-            emails.extend([""] * length_diff)
-        elif length_diff < 0:
-            phones.extend([""] * abs(length_diff))
-        for phone, email in zip(phones, emails):
-            print('│ ' + str(phone).ljust(30) + '│ ' + email.ljust(47) + '│' )
-        print('└' + '─' * 80 + '┘')
-
 def main():
     print(MSG_HELP)
 
@@ -151,7 +117,7 @@ def main():
                     else:
                         print(f"{args["name"]} doesn't have any email addresses.")
                 case "all":
-                    print_person(**args)
+                    print(core.render_person_table(**args))
                 case _:
                     print("ERROR: Unknown command. Try again.")
         except ValueError as e:
