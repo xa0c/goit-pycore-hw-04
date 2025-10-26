@@ -1,3 +1,6 @@
+LINE_MAX_SIZE = 100
+CURRENCY_SIZE = 100
+
 def get_cats_info(path: str) -> list[dict]:
     """Parse cat info records.
 
@@ -12,8 +15,6 @@ def get_cats_info(path: str) -> list[dict]:
         UnicodeDecodeError: If file has wrong UTF-8 encoding.
         ValueError: If record has invalid format.
     """
-    LINE_MAX_SIZE = 100
-    CURRENCY_SIZE = 100
     records_count = 0
     cats = {}
     try:

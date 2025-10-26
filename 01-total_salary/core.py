@@ -1,5 +1,8 @@
 import decimal, re
 
+LINE_MAX_SIZE = 100
+CURRENCY_SIZE = 100
+
 def total_salary(path: str) -> tuple[float, float]:
     """Calculate total and average salary.
 
@@ -14,8 +17,6 @@ def total_salary(path: str) -> tuple[float, float]:
         UnicodeDecodeError: If file has wrong UTF-8 encoding.
         ValueError: If record has invalid format.
     """
-    LINE_MAX_SIZE = 100
-    CURRENCY_SIZE = 100
     records_count = 0
     total_cents = 0
     number_re = re.compile(r"^\d+(\.\d+)?$")
