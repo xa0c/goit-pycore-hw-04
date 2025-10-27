@@ -64,6 +64,21 @@ def parse_input(user_input: str) -> tuple[str, dict[str, str]]:
 
     return cmd.lower(), args
 
+def print_contact_list(person_name: str, contact_type: str, contacts: list):
+    """Prints user-friendly list of person's contacts by type.
+
+    Args:
+        person_name (str): Person's name.
+        contact_type (str): Contact type ("phone" or "email")
+        contacts (list): List of contacts to output.
+    """
+    if contacts:
+        print(f"List of {contact_type} contacts for {person_name}:")
+        for contact in contacts:
+            print(contact)
+    else:
+        print(f"{person_name} doesn't have any {contact_type} contacts.")
+
 def main():
     print(MSG_HELP)
 
@@ -102,20 +117,10 @@ def main():
                     print(f"{result.title()} contact deleted.")
                 case "phone":
                     result = core.show_phone(**args)
-                    if result:
-                        print(f"List of phone numbers for {args["name"]}:")
-                        for phone in result:
-                            print(phone)
-                    else:
-                        print(f"{args["name"]} doesn't have any phone numbers.")
+                    print_contact_list(args["name"], cmd, result)
                 case "email":
                     result = core.show_email(**args)
-                    if result:
-                        print(f"List of email addresses for {args["name"]}:")
-                        for email in result:
-                            print(email)
-                    else:
-                        print(f"{args["name"]} doesn't have any email addresses.")
+                    print_contact_list(args["name"], cmd, result)
                 case "all":
                     print(core.render_person_table(**args))
                 case _:
